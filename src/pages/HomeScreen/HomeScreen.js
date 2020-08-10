@@ -85,7 +85,7 @@ class HomeScreen extends Component {
                     <Col style={{ height:this.state.height, alignItems:'center',justifyContent:'center'}}>
                         <TouchableOpacity
                         onPress={()=>{
-                            let dato = 'sevicio'
+                            let dato = 'servicio'
                             this.props.navigation.navigate('Getallpost', {dato})
                         }}>
                             <Icon

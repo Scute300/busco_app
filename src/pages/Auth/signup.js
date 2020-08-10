@@ -31,32 +31,37 @@ export default class Signup extends Component {
     }
 
     signup = async()=>{
-        if(this.state.sendform == false){
-            if(Platform.OS == "android"){
-            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-            }
-            this.setState({sendform : true})
-            const response = await functions.signup(this.state.nombre,this.state.username, this.state.numero,this.state.email, this.state.password,this.state.confirmpassword)
-            switch(response.response){
-                case true:
-                    this.props.navigation.navigate('AuthLoading')
-                    break;
-                case false:
-                    this.setState({sendform: false})
-                    this.refs.toast.show(response.error);
-                    if(Platform.OS == "android"){
-                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        setTimeout(async()=>{
+            if(this.state.sendform == false){
+                if(Platform.OS == "android"){
+                    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+                }
+                this.setState({sendform : true})
+                if(this.state.sendform == true){
+                    const response = await functions.signup(this.state.nombre,this.state.username, this.state.numero,this.state.email, this.state.password,this.state.confirmpassword)
+                    switch(response.response){
+                        case true:
+                            this.props.navigation.navigate('AuthLoading')
+                        break;
+                        case false:
+                            this.setState({sendform: false})
+                            this.refs.toast.show(response.error);
+                            if(Platform.OS == "android"){
+                            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                        break
+                        case 'error':
+                            this.refs.toast.show('Las contraseñas no coinciden');
+                            this.setState({sendform: false})
+                            if(Platform.OS == "android"){
+                            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                        break
                     }
-                    break
-                case 'error':
-                    this.refs.toast.show('Las contraseñas no coinciden');
-                    this.setState({sendform: false})
-                    if(Platform.OS == "android"){
-                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    break
+                }
             }
-        }
+
+        }, 1000)
     }
     onChangedNumber(text){
         let newText = '';

@@ -20,20 +20,24 @@ export default class Report extends Component{
 
 
     reportar = async()=>{
-        if(this.state.sendreport == false){
-            this.setState({sendreport : true})
-            const response = await functions.send(this.props.navigation.state.params.dato, this.state.report)
-            switch(response.response){
-                case true : 
-                await this.refs.toast.show(response.data);
-                this.props.navigation.navigate('AuthLoading')
-                break
-                case false :
-                    this.refs.toast.show(response.data);
-                    this.setState({sendreport: false})
-                break
+        setTimeout(async()=>{
+            if(this.state.sendreport == false){
+                this.setState({sendreport : true})
+                if (this.state.sendreport == true){
+                    const response = await functions.send(this.props.navigation.state.params.dato, this.state.report)
+                    switch(response.response){
+                        case true : 
+                        await this.refs.toast.show(response.data);
+                        this.props.navigation.navigate('AuthLoading')
+                        break
+                        case false :
+                            this.refs.toast.show(response.data);
+                            this.setState({sendreport: false})
+                        break
+                    }
+                }
             }
-        }
+        }, 1000)
     }
     render(){
         return(

@@ -27,33 +27,38 @@ export default class Login extends Component {
     }
 
     login = async()=> {
-        if(this.state.sendform == false){
-            if(Platform.OS == "android"){
-            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-            }
-            this.setState({sendform : true})
-            const login = await functions.login(this.state.email, this.state.password)
-            switch(login.response){
-                case true :
-                    this.props.navigation.navigate('AuthLoading')
-                    break;
-                case false :
-                    this.refs.toast.show(login.error);
-                    this.setState({sendform : false})
-                    if(Platform.OS == "android"){
-                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        setTimeout(async()=>{
+            if(this.state.sendform == false){
+                if(Platform.OS == "android"){
+                    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
                     }
-                    break;
-                case 'error' :
-                    this.setState({sendform : false})
-                    this.refs.toast.show('Comprueba tu conexión');
-                    if(Platform.OS == "android"){
-                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                this.setState({sendform : true})
+                if(this.state.sendform == true){
+                    const login = await functions.login(this.state.email, this.state.password)
+                    switch(login.response){
+                        case true :
+                            this.props.navigation.navigate('AuthLoading')
+                        break;
+                        case false :
+                            this.refs.toast.show(login.error);
+                            this.setState({sendform : false})
+                            if(Platform.OS == "android"){
+                            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                        break;
+                        case 'error' :
+                            this.setState({sendform : false})
+                            this.refs.toast.show('Comprueba tu conexión');
+                            if(Platform.OS == "android"){
+                            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                        break;
+                            
                     }
-                    break;
-                    
+                }
             }
-        }
+
+        }, 1000)
 
     }
 

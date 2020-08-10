@@ -176,67 +176,77 @@ class Newpost extends Component{
     }
 
     newpost = async()=>{
-        if(this.state.sendform == false){
-            if(Platform.OS == "android"){
-                BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-            }
-            this.setState({sendform : true})
-            const data = await functions.subir(this.state.post,this.state.texto, this.state.name, this.state.images,
-                                                this.state.category, this.state.location, this.state.price, this.state.estado)
-            switch(data.response){
-                case true:
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        setTimeout(async()=>{
+            if(this.state.sendform == false){
+                if(Platform.OS == "android"){
+                    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+                }
+                this.setState({sendform : true})
+                if(this.state.sendform == true){
+                    const data = await functions.subir(this.state.post,this.state.texto, this.state.name, this.state.images,
+                                                        this.state.category, this.state.location, this.state.price, this.state.estado)
+                    switch(data.response){
+                        case true:
+                            if(Platform.OS == "android"){
+                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                            this.setState({name : '', texto : '',location :'', 
+                                            images:[], price: '0' ,sendform : false})
+                                            let dato = data.data.id
+                            this.refs.toast.show('Posteado');
+                            this.props.navigation.navigate('Getpost', {dato})
+                        break
+                        case false :
+                            if(Platform.OS == "android"){
+                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                            this.setState({sendform : false})
+                            this.refs.toast.show(data.data);
+                        break
                     }
-                    this.setState({name : '', texto : '',location :'', 
-                                    images:[], price: '0' ,sendform : false})
-                                    let dato = data.data.id
-                    this.refs.toast.show('Posteado');
-                    this.props.navigation.navigate('Getpost', {dato})
-                break
-                case false :
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    this.setState({sendform : false})
-                    this.refs.toast.show(data.data);
-                break
+                }
             }
-            
-        }
+        }, 1000)
     }
 
     getcurriculum = async()=>{
-        if(this.state.sendform == false)
-            if(Platform.OS == "android"){
-                BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+        setTimeout(async()=>{
+            if(this.state.sendform == false){
+                if(Platform.OS == "android"){
+                    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+                }
+                this.setState({sendform : true})
+                if(this.state.sendform == true){
+                    const document = await functions.getcurriculum(this.props.userdata.userdata.username)
+                    switch(document.response){
+                        case false :
+                            if(Platform.OS == "android"){
+                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                            this.setState({sendform : false})
+                            this.refs.toast.show('No se puede postear de momento');
+                            break
+                        case 'posteado': 
+                            if(Platform.OS == "android"){
+                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                            this.props.OnUserSession({isonline : true, userdata : document.data})
+                            this.setState({sendform : false})
+                            this.refs.toast.show('Posteado');
+                        break
+                        case 'actualizado' :
+                            if(Platform.OS == "android"){
+                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                            this.setState({sendform : false})
+                            this.refs.toast.show('Actualizado');
+                        break
+                    }
+                }
             }
-            this.setState({sendform : true})
-            const document = await functions.getcurriculum(this.props.userdata.userdata.username)
-            switch(document.response){
-                case false :
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    this.setState({sendform : false})
-                    this.refs.toast.show('No se puede postear de momento');
-                    break
-                case 'posteado': 
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    this.props.OnUserSession({isonline : true, userdata : document.data})
-                    this.setState({sendform : false})
-                    this.refs.toast.show('Posteado');
-                break
-                case 'actualizado' :
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    this.setState({sendform : false})
-                    this.refs.toast.show('Actualizado');
-                break
-            }
+
+        }, 1000)
     
     }
 

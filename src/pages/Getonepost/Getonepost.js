@@ -38,14 +38,16 @@ class Getonepost extends Component {
     }
 
     loading = async()=>{
-        const data = await functions.getpost(this.props.navigation.state.params.dato)
-        switch(data.response) {
-            case true :
-                this.setState({post: data.data, images :data.data.images , status: 'sure'})
-            break
-            case false :
-                this.setState({status : 'error'})
-        }
+        setTimeout(async()=>{
+            const data = await functions.getpost(this.props.navigation.state.params.dato)
+            switch(data.response) {
+                case true :
+                    this.setState({post: data.data, images :data.data.images , status: 'sure'})
+                break
+                case false :
+                    this.setState({status : 'error'})
+            }
+        }, 1000)
     }
 
     sendwathsapp = ()=>{
