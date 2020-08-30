@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {Container,  Header, Left, Body, Icon, Picker, 
 Form, Card, CardItem, Input, Spinner,
-Footer,
+Footer, Text,
 Item} from 'native-base'
-import {StyleSheet, 
-View, TouchableOpacity, Platform, BackHandler} from 'react-native'
+import {StyleSheet, TouchableOpacity, View} from 'react-native'
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Post from '../../globalfunctions/globalcomponents/Post'
+import { StatusBar } from 'expo-status-bar'
+import {connect} from 'react-redux'
 
-export default class Getallposts extends Component{
+class Getallposts extends Component{
     constructor(){
         super();
         this.state ={
@@ -89,7 +90,8 @@ export default class Getallposts extends Component{
             numero: '',
             showmenu : 1,
             find : false,
-            finder : ''
+            finder : '',
+            viewall: ''
 
         }
     }
@@ -101,8 +103,14 @@ export default class Getallposts extends Component{
         async() => {
             this.refresh()
             await this.Change()
-            await this.getposts()
+            await this.getposts(this.props.navigation.state.params.dato, this.state.page,this.props.userdata.userdata.location !== null? this.props.userdata.userdata.location: 'global')
         })
+    }
+    getallorone=(dato)=>{
+            this.setState({
+                posts: [],viewall : dato, page: 0})
+            this.getposts(this.props.navigation.state.params.dato, this.state.page, dato)
+    
     }
 
 //Se cambia el parametro de numeros
@@ -123,22 +131,25 @@ export default class Getallposts extends Component{
         
     }
 //optenerposts
-    getposts = async()=>{
+    getposts = async(category, page, location)=>{
         setTimeout(async()=>{
             if(this.state.active === true && this.state.find === false){
                 this.setState({active: false, loadmore: true})
                 if(this.state.active === false){
                     this.setState(prevState => ({ page: prevState.page + 1 }));
-                    const allposts = await functions.getposts(this.props.navigation.state.params.dato, this.state.page,
-                                                                this.state.finder)                                         
+                    const allposts = await functions.getposts(category, page, location)                                         
                     switch(allposts.response){
                         case true :
                             let arr = allposts.data 
                             if(Array.isArray(arr) && arr.length){
                                 let push = this.state.posts.concat(arr)
                                 this.setState({posts : push, active: true, loadmore: false})
+                            } else{
+
+                                this.setState({active: true, loadmore: false})
                             }
-                        break    
+                        break
+
                     }
                 }
             }
@@ -217,7 +228,9 @@ export default class Getallposts extends Component{
             page: 0,
             showmenu: 1,
             finder : '',
-            find:false
+            find:false,
+            viewall: this.props.userdata.userdata.location !== null?
+            this.props.userdata.userdata.location:'global'
         })
     }
 
@@ -241,6 +254,39 @@ export default class Getallposts extends Component{
                     <Body></Body>
                 </Header>
                     {this.finder(this.props.navigation.state.params.dato)}
+                    { this.props.userdata.userdata.location !== null
+                    ? 
+                    <View style={{width: '100%', alignItems: 'center'}}>
+                            {this.state.viewall == this.props.userdata.userdata.location
+                            ?
+                            <TouchableOpacity
+                                onPress={()=>{
+                                    this.getallorone('global')
+                                }}
+                            >
+                            <Text style={{color: '#c8001d'}}>
+                                Ver todo
+                            </Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                onPress={()=>{
+                                    this.getallorone(this.props.userdata.userdata.location)
+                                }}
+                            >
+                            <Text style={{color: '#c8001d'}}>
+                                En mi ubicación
+                            </Text>
+                            </TouchableOpacity>
+                            }
+                    </View>
+                    :
+                    <View style={{width: '100%', alignItems: 'center'}}>
+                            <Text style={{color: '#c8001d'}}>
+                                Configura tu ubicación para resultados especificos
+                            </Text>
+                    </View>
+                    }
                     <Post
                     navigation={this.props.navigation}
                     load={this.getposts.bind(this)}
@@ -251,6 +297,7 @@ export default class Getallposts extends Component{
                     />
                  <Toast ref="toast"/>
                  {this.Myfooter(this.state.loadmore)}
+                 <StatusBar style="light" />
             </Container>
         )
     }
@@ -402,9 +449,17 @@ export default class Getallposts extends Component{
 
 const styles = StyleSheet.create({
     header : {
-        backgroundColor: 'white'
+        backgroundColor: '#c8001d',
+        marginTop:15
     },
     icons :{
-        color : '#c8001d'
+        color : 'white',
+        marginTop: 9
     }
 })
+
+const mapStateToProps = state => {
+  return {userdata : state.userdata}
+}
+
+export default connect(mapStateToProps)(Getallposts)

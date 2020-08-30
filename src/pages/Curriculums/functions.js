@@ -3,7 +3,7 @@ import * as WebBrowser from 'expo-web-browser';
 
 const getcvs = async(page)=>{
     let r = {response : false}
-    await axios.get('https://buscoapi.herokuapp.com/api/v1/curriculums/'+page)
+    await axios.get('https://buscoapp.herokuapp.com/api/v1/curriculums/'+page)
     .then(response => {
         r = {response : true, data: response.data.data.data}
     }).catch(error => {

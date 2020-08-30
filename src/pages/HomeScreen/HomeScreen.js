@@ -5,7 +5,7 @@ import Navbar from '../../globalfunctions/globalcomponents/navbar'
 import { Col, Grid } from 'react-native-easy-grid'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Animated} from 'react-native'
-
+import { StatusBar } from 'expo-status-bar'
 let dimension = 0
 
 class HomeScreen extends Component {
@@ -60,7 +60,7 @@ class HomeScreen extends Component {
                             style={{fontSize:80, color: 'white'}}
                             />
                             <Title style={{color :'#FFFFFF'}}>
-                                Listado
+                                Listados
                             </Title>
                         </TouchableOpacity>
                     </Col>
@@ -75,7 +75,7 @@ class HomeScreen extends Component {
                             name='isv'
                             style={{fontSize:80, color: '#c8001d'}}
                             />
-                            <Title style={{color: '#c8001d'}}>
+                            <Title style={{color: '#c8001d', fontSize: 16}}>
                                 Negocios
                             </Title>
                         </TouchableOpacity>
@@ -112,8 +112,8 @@ class HomeScreen extends Component {
                             name='person'
                             style={{fontSize:80, color: 'white'}}
                             />
-                            <Title style={{color :'#FFFFFF'}}>
-                                Empleo
+                            <Title style={{color :'#FFFFFF', fontSize: 16}}>
+                                Empleos
                             </Title>
                         </TouchableOpacity>
                         </Col>
@@ -129,11 +129,8 @@ class HomeScreen extends Component {
                             name='persons'
                             style={{fontSize:80, color :'white'}}
                             />
-                            <Title style={{fontSize:16, color :'#FFFFFF'}}>
-                                Empleados/
-                            </Title>
-                            <Title style={{fontSize:16, color :'#FFFFFF'}}>
-                                Curriculum
+                            <Title style={{fontSize:16, color :'#FFFFFF', fontSize: 15}}>
+                                Curriculums
                             </Title>
                         </TouchableOpacity>
                     </Col>
@@ -159,6 +156,7 @@ class HomeScreen extends Component {
                 </Grid>
                 </Animated.View>
             </Content>
+            <StatusBar style="light"/>
             </Container>
         )
     }

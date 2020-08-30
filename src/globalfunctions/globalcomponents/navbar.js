@@ -1,15 +1,11 @@
 import React , {Component} from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
-  View,
-  AsyncStorage,
   Image,
-  Alert,
   TouchableOpacity
 } from 'react-native'
-import {Spinner, Container, Header, Left, 
-Body, Right, Text, Icon,Title} from 'native-base'
+import {Header, Left, 
+Right, Icon,Title} from 'native-base'
 
 
 
@@ -28,7 +24,7 @@ export default class Navbar extends Component{
                 <Right>
                     <Image
                     style={styles.logo}
-                    source={require('../../../assets/logo.png')}
+                    source={require('../../../assets/logowhite.png')}
                     />
                 </Right>
             </Header>
@@ -66,13 +62,15 @@ export default class Navbar extends Component{
 
 const styles = StyleSheet.create({
     header :{
-        backgroundColor: 'transparent',
+        backgroundColor: '#c8001d' 
     },
     logo : {
         height: 60,
-        width: 100
+        width: 100, 
+        marginTop: 20
     },
     icon: {
-        color : '#c8001d'
+        color : 'white', 
+        marginTop: 20
     }
 })

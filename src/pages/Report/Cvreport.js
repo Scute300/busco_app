@@ -87,10 +87,11 @@ export default class Report extends Component{
 
 const styles = StyleSheet.create({
     header : {
-        backgroundColor: 'white'
+        backgroundColor: '#c8001d',
     },
     icons :{
-        color : '#c8001d'
+        color : 'white',
+        marginTop: 9
     },
     button: {
         backgroundColor :'#c8001d'

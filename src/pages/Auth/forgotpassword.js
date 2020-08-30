@@ -74,11 +74,12 @@ const styles = StyleSheet.create({
         marginTop: 60
     },
     header :{
-        backgroundColor : 'transparent'
+        backgroundColor: '#c8001d',
+        marginTop: 15
     },
     icon: {
         fontSize: 36,
-        color : '#c8001d'
+        color : 'white'
     },
     form: {
         marginTop: 40

@@ -32,7 +32,7 @@ const image = async()=>{
     }
 } 
 
-const subir = async(type, text, name, images, category, location, price, status)=>{
+const subir = async(type, text, name, images, category, price, status, currency)=>{
     let r = {response : false}
     const token = await AsyncStorage.getItem('user-token')
     await axios.post(url+'/newpost', {
@@ -41,9 +41,9 @@ const subir = async(type, text, name, images, category, location, price, status)
         text :text, 
         images : images,
         category: category,
-        location: location,
         price: price,
-        status: status
+        status: status,
+        currency: currency
     },{headers: {Authorization: `Bearer ${token}`}, timeout:60000})
     .then(response => {
         r ={response : true, data: response.data.data}
@@ -55,9 +55,9 @@ const subir = async(type, text, name, images, category, location, price, status)
 
 const getcurriculum = async(user)=>{
     let { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if(status !== 'grantend'){
+    if(status !== 'granted'){
         Alert.alert('Necesitas permisos para subir tu curriculum')
-    } else{
+    } else {
     const result = await DocumentPicker.getDocumentAsync({type: "application/pdf", copyToCacheDirectory: true});
     if(result.type == 'success'){
         const token = await AsyncStorage.getItem('user-token')

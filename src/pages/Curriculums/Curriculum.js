@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
-import {Container,  Header, Left, Body, Icon, Picker, 
-Form, Card, CardItem, Input, Spinner, Text,
-Footer,Thumbnail, Item, Content} from 'native-base'
-import {StyleSheet, 
-View, TouchableOpacity, Platform, BackHandler} from 'react-native'
+import {Container,  Header, Left, Body, Icon, 
+    Card, CardItem, Spinner, Text,
+Footer,Thumbnail, Content} from 'native-base'
+import {StyleSheet,  TouchableOpacity} from 'react-native'
 import functions from './functions'
-import Toast, {DURATION} from 'react-native-easy-toast'
-import Post from '../../globalfunctions/globalcomponents/Post'
-import { WebView } from 'react-native-webview';
-import * as Permissions from 'expo-permissions';
 import {connect} from 'react-redux'
+import { StatusBar } from 'expo-status-bar'
 
 
 class Curriculum extends Component{
@@ -81,6 +77,7 @@ class Curriculum extends Component{
                     {this.profecionals(this.state.cv)}
                 </Content>
                 {this.myfooter(this.state.loadmore)}
+                <StatusBar style="light" />
             </Container>
         )
     }
@@ -151,10 +148,12 @@ class Curriculum extends Component{
 
 const styles = StyleSheet.create({
     header : {
-        backgroundColor: 'white'
+        backgroundColor: '#c8001d',
+        marginTop: 9
     },
     icons :{
-        color : '#c8001d'
+        color : 'white',
+        marginTop: 9
     }
 })
 

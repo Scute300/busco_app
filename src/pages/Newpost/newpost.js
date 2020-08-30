@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {Container, Content, 
-Header, Left, Body, Icon, Title, Picker, 
+Header, Left, Body, Icon, Picker, 
 Form, Text, Card, CardItem, Textarea,
 Thumbnail,
 Button,
 Input,
 Spinner} from 'native-base'
 import {connect} from 'react-redux'
-import {Animated, StyleSheet, 
-View, TouchableOpacity, Platform, Alert, 
+import {StyleSheet, 
+View, TouchableOpacity, Platform, 
 ToastAndroid, BackHandler} from 'react-native'
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import * as actions from '../../globalfunctions/actions'
+import { StatusBar } from 'expo-status-bar'
 
 
 class Newpost extends Component{
@@ -22,7 +23,6 @@ class Newpost extends Component{
             post: 'listado',
             name: '',
             texto:'',
-            location: '',
             sendform: true,
             images: [],
             category:'Ropa y calzado',
@@ -33,6 +33,7 @@ class Newpost extends Component{
             'Deporte'],
             contentpost:'Describe lo que quieras publicar',
             nombrepost:'Ponle nombre a tu post',
+            currency: 'Dolar',
             negocioscategories: [
                     'Restaurante',
                     'Ropa',
@@ -131,26 +132,27 @@ class Newpost extends Component{
             case 'listado':
                 await this.setState({contentpost : 'Describe lo que quieres publicar',
                                 nombrepost : 'Ponle nombre a tu post',
-                                category : 'Ropa y Calzado' , estado : 'Nuevo'})
+                                category : 'Ropa y Calzado' , estado : 'Nuevo', 
+                                currency:'Dolar'})
             break
             case 'negocio': 
             await this.setState({contentpost : 'Describe tu negocio',
                             nombrepost : '¿Como se llama tu negocio?',
-                            category : 'Animales', estado : ''})
+                            category : 'Animales', estado : '', currency:''})
             break
             case 'servicio':
                 this.setState({contentpost : 'Describe tu servicio',
                                 nombrepost : '¿Que clase de servicio ofreces?',
-                                category : 'Abogado', estado : ''})
+                                category : 'Abogado', estado : '', currency:''})
             break
             case 'vacante':
                 this.setState({contentpost : 'Describe la vacante que ofreces',
                                 nombrepost : '¿Que vacante ofreces?', estado : '',
-                                category: ''})
+                                category: '', currency:'Dolar'})
 
         }
         this.setState({images : [], post : value, price : '', text: '', 
-                        name:'', location: ''})
+                        name:'',})
     }
     pickacategory(value){
         this.setState({category : value})
@@ -176,37 +178,45 @@ class Newpost extends Component{
     }
 
     newpost = async()=>{
-        setTimeout(async()=>{
-            if(this.state.sendform == false){
-                if(Platform.OS == "android"){
-                    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-                }
-                this.setState({sendform : true})
-                if(this.state.sendform == true){
-                    const data = await functions.subir(this.state.post,this.state.texto, this.state.name, this.state.images,
-                                                        this.state.category, this.state.location, this.state.price, this.state.estado)
-                    switch(data.response){
-                        case true:
-                            if(Platform.OS == "android"){
-                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                            }
-                            this.setState({name : '', texto : '',location :'', 
-                                            images:[], price: '0' ,sendform : false})
-                                            let dato = data.data.id
-                            this.refs.toast.show('Posteado');
-                            this.props.navigation.navigate('Getpost', {dato})
-                        break
-                        case false :
-                            if(Platform.OS == "android"){
-                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                            }
-                            this.setState({sendform : false})
-                            this.refs.toast.show(data.data);
-                        break
+        if(this.props.userdata.userdata.location !== null){    
+            setTimeout(async()=>{
+                if(this.state.sendform == false){
+                    if(Platform.OS == "android"){
+                        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+                    }
+                    this.setState({sendform : true})
+                    if(this.state.sendform == true){
+                        const data = await functions.subir(this.state.post,this.state.texto, this.state.name, this.state.images,
+                                                            this.state.category, this.state.price, this.state.estado, this.state.currency)
+                        switch(data.response){
+                            case true:
+                                if(Platform.OS == "android"){
+                                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                                }
+                                this.setState({name : '', texto : '', 
+                                                images:[], price: '0' ,sendform : false})
+                                                let dato = data.data.id
+                                this.refs.toast.show('Posteado');
+                                this.props.navigation.navigate('Getpost', {dato})
+                            break
+                            case false :
+                                if(Platform.OS == "android"){
+                                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                                }
+                                this.setState({sendform : false})
+                                this.refs.toast.show(data.data);
+                            break
+                        }
                     }
                 }
-            }
-        }, 1000)
+            }, 1000)
+        } else{
+            this.refs.toast.show('Para publicar debemos acceder a tu ubicación');
+            this.props.navigation.navigate('Modificar')
+        }
+    }
+    pickcurrency(value){
+        this.setState({currency : value})
     }
 
     getcurriculum = async()=>{
@@ -261,7 +271,6 @@ class Newpost extends Component{
                                 post: 'listado',
                                 name: '',
                                 texto:'',
-                                location: '',
                                 images: [],
                                 category:'Ropa y calzado',
                                 price: '',
@@ -318,6 +327,7 @@ class Newpost extends Component{
                             }
                         </Button>
                     </Content>
+                    <StatusBar style="light" />
                  <Toast ref="toast"/>
             </Container>
         )
@@ -389,13 +399,21 @@ class Newpost extends Component{
                         style={{width : '75%', borderColor: 'gray'}}/>
                     </CardItem>
                     <CardItem>
-                        <Input 
-                        onChangeText={(location) =>
-                        this.setState({location})}
-                        value={this.state.location}
-                        editable={!this.state.sendform}
-                        placeholder={'¿Donde se ubica esto?'}
-                        style={{width : '75%', borderColor: 'gray'}}/>
+                        {
+                        this.props.userdata.userdata.location == null
+                        ?
+                        <TouchableOpacity onPress={()=>{
+                            this.props.navigation.navigate('Modificar')
+                        }}>
+                            <Text style={{color: '#c8001d'}}>
+                                Necesitamos tu Localización para que puedas publicar
+                            </Text>
+                        </TouchableOpacity>
+                        :
+                        <Text style={{color: '#c8001d'}}>
+                            Usaremos tu Localización para publicar esto
+                        </Text>
+                        }
                     </CardItem>
                     {this.postbox(this.state.post)}
                 </Card>
@@ -408,12 +426,14 @@ class Newpost extends Component{
                     <CardItem>
                         { this.props.userdata.userdata.cv_id == null
                         ?
-                        <Text style={styles.icons}>
+                        <Text 
+                        style={{color: '#c8001d' }}>
                             Al subir tu curriculum este se mostrará 
                             junto a tu perfil profesional 
                         </Text>
                         :
-                        <Text style={styles.icons}>
+                        <Text 
+                        style={{color: '#c8001d' }}>
                             Ya tienes un curriculum subido pero puedes
                             actualizarlo subiendo uno nuevo para sobre
                             escribir el anterior
@@ -423,7 +443,7 @@ class Newpost extends Component{
                     <TouchableOpacity
                     onPress={this.getcurriculum}>
                         <Icon 
-                        style={styles.icons}
+                        style={{color: '#c8001d' }}
                         type='AntDesign'
                         name='pluscircleo'/>
                     </TouchableOpacity>
@@ -443,6 +463,18 @@ class Newpost extends Component{
                         value={this.state.price}
                         editable={!this.state.sendform}
                         style={{width : '75%', borderColor: 'gray'}}/>
+
+                        <Picker
+                        mode="dropdown"
+                        enabled={!this.state.sendform}
+                        iosIcon={<Icon name="arrow-down" />}
+                        selectedValue={this.state.currency}
+                        onValueChange={this.pickcurrency.bind(this)}
+                        >
+                        <Picker.Item label="Dolar" value="Dolar" />
+                        <Picker.Item label="Cordova" value="Cordova" />
+                        </Picker>
+
                     </CardItem>
                     {this.pickersoptions(this.state.post, this.state.listcategories)}
                 </Card>
@@ -468,6 +500,16 @@ class Newpost extends Component{
                         editable={!this.state.sendform}
                         placeholder={'Salario'}
                         style={{width : '75%', borderColor: 'gray'}}/>
+                        <Picker
+                        mode="dropdown"
+                        enabled={!this.state.sendform}
+                        iosIcon={<Icon name="arrow-down" />}
+                        selectedValue={this.state.currency}
+                        onValueChange={this.pickcurrency.bind(this)}
+                        >
+                        <Picker.Item label="Dolar" value="Dolar" />
+                        <Picker.Item label="Cordova" value="Cordova" />
+                        </Picker>
                     </CardItem>
                     {this.pickersoptions(this.state.post, this.state.listcategories)}
                 </Card>
@@ -554,10 +596,11 @@ class Newpost extends Component{
 
 const styles = StyleSheet.create({
     header :{
-        backgroundColor: 'white'
+        backgroundColor: '#c8001d'
     },
     icons: {
-        color: '#c8001d' 
+        color: 'white' ,
+        marginTop: 9
     },
     elementsicons: {
         color:'#c8001d', 

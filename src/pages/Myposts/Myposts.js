@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
-import {Container,  Header, Left, Body, Icon, Picker, 
-Form, Card, CardItem, Input, Spinner,
-Footer,
-Item,
-Content} from 'native-base'
-import {StyleSheet, 
-View, TouchableOpacity, Platform, BackHandler} from 'react-native'
+import {Container, Spinner,
+Footer} from 'native-base'
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Post from '../../globalfunctions/globalcomponents/Post'
 import Navbar from '../../globalfunctions/globalcomponents/navbar'
 import {connect} from 'react-redux'
+import { StatusBar } from 'expo-status-bar'
 
 class Myposts extends Component{
     constructor(){
@@ -69,6 +65,7 @@ class Myposts extends Component{
                 navigation={this.props.navigation}
                 userdata={this.props.userdata}
                 />
+                    <StatusBar style="light" />
                     {this.posts()}
                     <Toast ref="toast"/>
                     {this.footer()}

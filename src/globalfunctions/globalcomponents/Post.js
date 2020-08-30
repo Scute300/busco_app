@@ -91,7 +91,12 @@ export default class Getallposts extends Component{
                     <CardItem>
                         <Left>
                             <Body>
-                            <Text note>{options.price}</Text>
+                            { options.price !== null
+                            ?
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} {options.price}</Text>
+                            :
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} 0</Text>
+                            }
                             </Body>
                         </Left>
                     </CardItem>
@@ -115,7 +120,12 @@ export default class Getallposts extends Component{
                     <CardItem>
                         <Left>
                             <Body>
-                            <Text note>{options.price}</Text>
+                            { options.price !== null
+                            ?
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} {options.price}</Text>
+                            :
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} 0</Text>
+                            }
                             </Body>
                         </Left>
                     </CardItem>

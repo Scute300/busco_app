@@ -5,7 +5,7 @@ import { Alert, AsyncStorage }  from 'react-native';
 import * as Location from 'expo-location';
 
   
-const gkey = 'AIzaSyAlkLMwo2DR78R2ftlL9EiDjs4KmhYh7Gc'
+const gkey = 'AIzaSyBNwCV021BQBYb9VQNjJWnocPCqcWfpmZk'
 const url = 'https://buscoapp.herokuapp.com/api/v2/account'
 const getprofilepicturepreview = async()=>{
     let r ={response : false}
@@ -56,9 +56,11 @@ const location = async() => {
         await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=street_address&components=country&key=${gkey}`)
         .then(response =>{
             let ubicacion = response.data.plus_code.compound_code.slice(8)
+            console.log(response)
             r = {response : true, data : ubicacion}
         }).catch(error => {
-            r = {response : true, data : 'En este momento no se puede acceder a tu ubicación'}
+            console.log(error)
+            r = {response : false, data : 'En este momento no se puede acceder a tu ubicación'}
         })
         if(r.response == true){
             const token = await AsyncStorage.getItem('user-token')

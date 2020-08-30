@@ -7,6 +7,7 @@ import {Animated, StyleSheet, View, TouchableOpacity,
 Platform, BackHandler,ToastAndroid, Alert} from 'react-native'
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import { StatusBar } from 'expo-status-bar'
 
 class Update extends Component{
     constructor(){
@@ -338,6 +339,7 @@ class Update extends Component{
                         {this.advanced(this.state.advanced)}
                     </Animated.View>
                 </Content>
+                <StatusBar style="light" />
                  <Toast ref="toast"/>
             </Container>
         )

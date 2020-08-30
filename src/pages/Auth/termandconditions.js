@@ -5,8 +5,7 @@ import {View, StyleSheet, ToastAndroid, BackHandler} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
-
-
+import { StatusBar } from 'expo-status-bar'
 
 
 export default class Termns extends Component{
@@ -68,6 +67,7 @@ Usted acuerda que no puede:
 
                 </Text>
             </Content>
+            <StatusBar style="light" />
             </Container>
         )
     }
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 36,
-        color : '#c8001d'
+        color : '#c8001d',
+        marginTop: 15
     },
     form: {
         marginTop: 40

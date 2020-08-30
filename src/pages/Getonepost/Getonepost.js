@@ -5,11 +5,12 @@ Text, Card, CardItem,
 Thumbnail,  Spinner,
 Right} from 'native-base'
 import {connect} from 'react-redux'
-import {Animated, StyleSheet, 
+import {StyleSheet, 
 View, TouchableOpacity, Image
 , Linking} from 'react-native'
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import { StatusBar } from 'expo-status-bar'
 
 
 class Getonepost extends Component {
@@ -52,7 +53,7 @@ class Getonepost extends Component {
 
     sendwathsapp = ()=>{
         Linking.openURL(
-          `https://wa.me/52${this.state.post.user.number}/?text=Hola%20me%20interesa%20tu%20${this.state.post.type}%20en%20Busco,`
+          `https://wa.me/${this.state.post.user.number}/?text=Hola%20me%20interesa%20tu%20${this.state.post.type}%20en%20Busco,`
         );
     }
 
@@ -106,6 +107,7 @@ class Getonepost extends Component {
                 {this.pantallas(this.state.status, this.state.post)}
             </Content>
             <Toast ref="toast"/>
+            <StatusBar style="light" />
             </Container>
         )
     }
@@ -158,7 +160,7 @@ class Getonepost extends Component {
                         <TouchableOpacity
                             onPress={this.call}>
                             <Icon 
-                            style={styles.icons}
+                            style={{color : '#c8001d' }}
                             type="FontAwesome"
                             name="phone"
                             />
@@ -241,7 +243,12 @@ class Getonepost extends Component {
                     <CardItem>
                         <Left>
                             <Body>
-                            <Text note>{options.price}</Text>
+                            { options.price !== null
+                            ?
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} {options.price}</Text>
+                            :
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} 0</Text>
+                            }
                             </Body>
                         </Left>
                     </CardItem>
@@ -265,7 +272,12 @@ class Getonepost extends Component {
                     <CardItem>
                         <Left>
                             <Body>
-                            <Text note>{options.price}</Text>
+                            { options.price !== null
+                            ?
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} {options.price}</Text>
+                            :
+                            <Text note>{options.currency == 'Dolar'? '$': 'C$'} 0</Text>
+                            }
                             </Body>
                         </Left>
                     </CardItem>
@@ -281,10 +293,11 @@ const styles = StyleSheet.create({
         justifyContent : 'center'
     },
     header : {
-        backgroundColor : 'white'
+        backgroundColor: '#c8001d',
     },
     icons :{
-        color : '#c8001d'
+        color : 'white',
+        marginTop: 9
     }
 })
 

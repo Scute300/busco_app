@@ -4,6 +4,7 @@ import {Spinner} from 'native-base'
 import {View, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import * as actions from '../../globalfunctions/actions'
+import { StatusBar } from 'expo-status-bar'
 
 class AuthLoading extends Component {
     constructor(){
@@ -37,6 +38,7 @@ class AuthLoading extends Component {
         return(
             <View style={Styles.container}>
                 <Spinner color='red'/>
+                <StatusBar style="light" />
             </View>
         )
     }

@@ -5,6 +5,7 @@ import {View, StyleSheet, ToastAndroid, BackHandler} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import { StatusBar } from 'expo-status-bar'
 
 export default class Login extends Component {
     constructor(){
@@ -139,6 +140,7 @@ export default class Login extends Component {
                         </TouchableOpacity>
                     </View>
                 </Content>
+                <StatusBar style="light"/>
                  <Toast ref="toast"/>
             </Container>
         )
@@ -152,11 +154,12 @@ const styles = StyleSheet.create({
         marginTop: 60
     },
     header :{
-        backgroundColor : 'transparent'
+        backgroundColor: '#c8001d'
     },
     icon: {
         fontSize: 36,
-        color : '#c8001d'
+        color : 'white',
+        marginTop: 15
     },
     form: {
         marginTop: 40

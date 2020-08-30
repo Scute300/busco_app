@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {Container, Content, Icon, Spinner, Form, 
 Item, Input, Text, Body, Header, Left} from 'native-base'
-import {connect} from 'react-redux'
-import * as actions from '../../globalfunctions/actions'
-import {Animated, StyleSheet, 
+import {StyleSheet, 
 View, TouchableOpacity, Platform, 
 AsyncStorage,BackHandler,ToastAndroid} from 'react-native'
 import functions from './functions'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import { StatusBar } from 'expo-status-bar'
 
 class Aoptions extends Component{
     constructor(){
@@ -184,6 +183,7 @@ class Aoptions extends Component{
                     </View>
                     }
                 </Content>
+                <StatusBar style="light" />
                 <Toast ref="toast"/>
             </Container>
         )
@@ -194,7 +194,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     headericon: {
-        color: '#c8001d' 
+        color: '#c8001d' ,
+        marginTop: 9
     },
     text : {
         alignItems :'center'

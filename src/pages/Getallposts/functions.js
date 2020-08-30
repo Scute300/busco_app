@@ -1,21 +1,22 @@
 import axios from 'axios'
 
 
-const getposts = async(category, page)=>{
+const getposts = async(category, page, location)=>{
     let r = {response : false}
 
-    await axios.get('https://buscoapp.herokuapp.com/api/v1/posts/'+category,{
-        params: {
-            foo: page
-        }
+    await axios.post('https://buscoapp.herokuapp.com/api/v1/posts/'+category,{
+            foo: page,
+            locate: location
     }).then(response =>{
         r = {response : true, data : response.data.data}
     }).catch(error=> {
+        console.log(error.response.data.message)
         r= {response : false, data : error.response.data.message}
     })
 
     return r
 }
+
 
 const getfindpost = async(type, status ,category, price, page, find, advancesearch) =>{
     let r = {response : false}
