@@ -11,8 +11,6 @@ import CustomDrawerContentComponent from './globalfunctions/globalcomponents/men
 import HomeScreen from './pages/HomeScreen/HomeScreen'
 import AuthLoading from './pages/AuthLoadingScreen/AuthLoading'
 import Login from './pages/Auth/login'
-import Signup from './pages/Auth/signup'
-import Forgot from './pages/Auth/forgotpassword'
 import Update from './pages/updateprofile/updateprofile'
 import Aoptions from './pages/updateprofile/advanceoptions'
 import Newpost from './pages/Newpost/newpost'
@@ -27,12 +25,6 @@ import Termns from './pages/Auth/termandconditions'
 const LoginStack = createStackNavigator({
     Login : {
         screen : Login
-    },
-    Signup :{
-      screen : Signup
-    },
-    Forgot :{
-      screen : Forgot
     },
     Termns : {
       screen : Termns

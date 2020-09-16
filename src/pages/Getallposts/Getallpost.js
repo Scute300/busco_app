@@ -106,11 +106,12 @@ class Getallposts extends Component{
             await this.getposts(this.props.navigation.state.params.dato, this.state.page,this.props.userdata.userdata.location !== null? this.props.userdata.userdata.location: 'global')
         })
     }
-    getallorone=(dato)=>{
-            this.setState({
+    getallorone= async (dato)=>{
+        if(this.state.active == true){
+            await this.setState({
                 posts: [],viewall : dato, page: 0})
-            this.getposts(this.props.navigation.state.params.dato, this.state.page, dato)
-    
+            await this.getposts(this.props.navigation.state.params.dato, this.state.page, dato)
+        }
     }
 
 //Se cambia el parametro de numeros

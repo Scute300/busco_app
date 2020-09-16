@@ -33,7 +33,7 @@ class HomeScreen extends Component {
 
     measureView = (event) => {
         const size = event.nativeEvent.layout.height
-        dimension = size / 3
+        dimension = size / 2
         this.setState({height : Math.trunc(dimension)})
     }
 
@@ -48,24 +48,29 @@ class HomeScreen extends Component {
             <Content onLayout={(event) => this.measureView(event)} >
             <Animated.View style={{marginTop : this.state.animatedXY.y, opacity: this.animateInterpolate}}>
                 <Grid>
-                    <Col style={{ height: this.state.height, backgroundColor : '#c8001d', alignItems:'center',justifyContent:'center'}}>
+                    <Col style={{ height: this.state.height, backgroundColor : '#c8001d', alignItems:'center',justifyContent:'center', width: '50%'}}>
                         <TouchableOpacity
+                        style={{width : '100%'}}
                             onPress={()=>{
                                 let dato = 'listado'
                                 this.props.navigation.navigate('Getallpost', {dato})
                             }}>
                             <Icon
-                            type='FontAwesome5'
-                            name='list'
+                            type='AntDesign'
+                            name='upload'
                             style={{fontSize:80, color: 'white'}}
                             />
-                            <Title style={{color :'#FFFFFF'}}>
-                                Listados
+                            <Title style={{color :'#FFFFFF',fontSize: 13}}>
+                                Subir
+                            </Title>
+                            <Title style={{color :'#FFFFFF', fontSize: 13}}>
+                                Negocio
                             </Title>
                         </TouchableOpacity>
                     </Col>
-                    <Col style={{ height:this.state.height, alignItems:'center',justifyContent:'center'}}>
+                    <Col style={{ height:this.state.height, alignItems:'center',justifyContent:'center', width: '50%'}}>
                         <TouchableOpacity
+                        style={{width : '100%'}}
                         onPress={()=>{
                             let dato = 'negocio'
                             this.props.navigation.navigate('Getallpost', {dato})
@@ -75,15 +80,16 @@ class HomeScreen extends Component {
                             name='isv'
                             style={{fontSize:80, color: '#c8001d'}}
                             />
-                            <Title style={{color: '#c8001d', fontSize: 16}}>
+                            <Title style={{color: '#c8001d', fontSize: 13}}>
                                 Negocios
                             </Title>
                         </TouchableOpacity>
                     </Col>
                 </Grid>
                 <Grid>
-                    <Col style={{ height:this.state.height, alignItems:'center',justifyContent:'center'}}>
+                    <Col style={{ height:this.state.height, alignItems:'center',justifyContent:'center', width: '50%'}}>
                         <TouchableOpacity
+                        style={{width : '100%'}}
                         onPress={()=>{
                             let dato = 'servicio'
                             this.props.navigation.navigate('Getallpost', {dato})
@@ -93,16 +99,14 @@ class HomeScreen extends Component {
                             name='people-carry'
                             style={{fontSize:80, color: '#c8001d'}}
                             />
-                            <Title style={{color: '#c8001d'}}>
+                            <Title style={{color: '#c8001d', fontSize: 13}}>
                                 Servicios
-                            </Title>
-                            <Title style={{color: '#c8001d', fontSize: 16}}>
-                                Profesionales
                             </Title>
                         </TouchableOpacity>
                     </Col>
-                    <Col style={{ height:this.state.height, backgroundColor : '#c8001d', alignItems:'center',justifyContent:'center'}}>
+                    <Col style={{ height:this.state.height, backgroundColor : '#c8001d', alignItems:'center',justifyContent:'center', width: '50%'}}>
                         <TouchableOpacity
+                        style={{width : '100%'}}
                         onPress={()=>{
                                 let dato = 'vacante'
                                 this.props.navigation.navigate('Getallpost', {dato})
@@ -112,47 +116,11 @@ class HomeScreen extends Component {
                             name='person'
                             style={{fontSize:80, color: 'white'}}
                             />
-                            <Title style={{color :'#FFFFFF', fontSize: 16}}>
-                                Empleos
+                            <Title style={{color :'#FFFFFF', fontSize: 13}}>
+                                Mi perfil
                             </Title>
                         </TouchableOpacity>
                         </Col>
-                </Grid>
-                <Grid>
-                    <Col style={{height: this.state.height, backgroundColor : '#c8001d' , alignItems:'center',justifyContent:'center'}}>
-                        <TouchableOpacity
-                            onPress={()=>{
-                                this.props.navigation.navigate('Curriculums')
-                            }}>
-                            <Icon
-                            type='Fontisto'
-                            name='persons'
-                            style={{fontSize:80, color :'white'}}
-                            />
-                            <Title style={{fontSize:16, color :'#FFFFFF', fontSize: 15}}>
-                                Curriculums
-                            </Title>
-                        </TouchableOpacity>
-                    </Col>
-                    <Col style={{height:this.state.height, alignItems: 'center', justifyContent: 'center'}}> 
-                    <TouchableOpacity
-                            onPress={()=>{
-                                if(this.props.userdata.isonline == true){
-                                    this.props.navigation.navigate('Newpost')
-                                }else {
-                                    this.props.navigation.navigate('Auth')
-                                }
-                            }}>
-                            <Icon
-                            type='AntDesign'
-                            name='form'
-                            style={{fontSize:80, color: '#c8001d'}}
-                            />
-                            <Title style={{color: '#c8001d'}}>
-                                Publicar
-                            </Title>
-                        </TouchableOpacity>
-                    </Col>
                 </Grid>
                 </Animated.View>
             </Content>
