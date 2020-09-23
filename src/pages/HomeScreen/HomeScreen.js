@@ -50,11 +50,7 @@ class HomeScreen extends Component {
                 <Grid>
                     <Col style={{ height: this.state.height, backgroundColor : '#c8001d', alignItems:'center',justifyContent:'center', width: '50%'}}>
                         <TouchableOpacity
-                        style={{width : '100%'}}
-                            onPress={()=>{
-                                let dato = 'listado'
-                                this.props.navigation.navigate('Getallpost', {dato})
-                            }}>
+                        style={{width : '100%'}}>
                             <Icon
                             type='AntDesign'
                             name='upload'
@@ -72,8 +68,8 @@ class HomeScreen extends Component {
                         <TouchableOpacity
                         style={{width : '100%'}}
                         onPress={()=>{
-                            let dato = 'negocio'
-                            this.props.navigation.navigate('Getallpost', {dato})
+                            let dato = 'Negocios'
+                            this.props.navigation.navigate('Drivermap', {dato})
                         }}>
                             <Icon
                             type='AntDesign'
@@ -91,8 +87,8 @@ class HomeScreen extends Component {
                         <TouchableOpacity
                         style={{width : '100%'}}
                         onPress={()=>{
-                            let dato = 'servicio'
-                            this.props.navigation.navigate('Getallpost', {dato})
+                            let dato = 'Servicio'
+                            this.props.navigation.navigate('Drivermap', {dato})
                         }}>
                             <Icon
                             type='FontAwesome5'

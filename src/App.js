@@ -13,15 +13,9 @@ import AuthLoading from './pages/AuthLoadingScreen/AuthLoading'
 import Login from './pages/Auth/login'
 import Update from './pages/updateprofile/updateprofile'
 import Aoptions from './pages/updateprofile/advanceoptions'
-import Newpost from './pages/Newpost/newpost'
-import Getonepost from './pages/Getonepost/Getonepost'
 import Report from './pages/Report/Report'
-import Getallposts from './pages/Getallposts/Getallpost'
-import Myposts from './pages/Myposts/Myposts'
-import Curriculums from './pages/Curriculums/Curriculums'
-import Curriculum from './pages/Curriculums/Curriculum'
-import Cvreport from './pages/Report/Cvreport'
 import Termns from './pages/Auth/termandconditions'
+import Drivermap from './pages/Map/Map'
 const LoginStack = createStackNavigator({
     Login : {
         screen : Login
@@ -65,20 +59,6 @@ const DrawerStack = createDrawerNavigator({
           drawerLabel : () =>  null
       }
     },
-    Newpost : {
-      screen : Newpost,
-      navigationOptions: {
-          drawerLockMode : 'locked-closed',
-          drawerLabel : () =>  null
-      }
-    },
-    Getpost : {
-      screen : Getonepost,
-      navigationOptions: {
-          drawerLockMode : 'locked-closed',
-          drawerLabel : () =>  null
-      }
-    },
     Report : {
       screen : Report,
       navigationOptions: {
@@ -86,47 +66,13 @@ const DrawerStack = createDrawerNavigator({
           drawerLabel : () =>  null
       }
     },
-    Cvreport : {
-      screen : Cvreport,
+      Drivermap : {
+      screen : Drivermap,
       navigationOptions: {
           drawerLockMode : 'locked-closed',
           drawerLabel : () =>  null
       }
-    },
-    Getallpost : {
-      screen : Getallposts,
-      navigationOptions: {
-          drawerLockMode : 'locked-closed',
-          drawerLabel : () =>  null
-      }
-    },
-    MisPosts:{
-      screen : Myposts,
-      navigationOptions :{
-          drawerLockMode : 'locked-closed',
-          unmountInactiveRoutes: true,
-          drawerIcon: ({ tintColor, focused }) => (
-            <Icon
-            type='FontAwesome5'
-            name='th-list'
-            style={{fontSize:20, color : tintColor}}
-            />),
-      }
-    },
-    Curriculums : {
-      screen : Curriculums,
-      navigationOptions: {
-          drawerLockMode : 'locked-closed',
-          drawerLabel : () =>  null
-      }
-    },
-    Curriculum : {
-      screen : Curriculum,
-      navigationOptions: {
-          drawerLockMode : 'locked-closed',
-          drawerLabel : () =>  null
-      }
-    },
+    }
 },
 {
   drawerPosition: 'left',
