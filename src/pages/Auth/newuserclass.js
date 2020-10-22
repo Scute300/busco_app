@@ -10,19 +10,19 @@ export default class User{
       }
   
     async register(){
-    let r ={response: false, token : null, error : ''}
-        await axios.post(baseurl+'v1/login', {
+       const r = await axios.post(baseurl+'v1/login', {
             token:this.token,
             type: this.type
         }).then(response=>{
-            r = {response : true, token : response.data.token, error: ''}
+            return {response : true, token : response.data.token, error: ''}
         }).catch(error =>{
-            r = {response : false, token : null, error: error.response.data.message}
+            return {response : false, token : null, error: error.response.data.message !== null ? error.response.data.message : 'No se puede conectar al servidor'}
         })
         if(r.token !== null){
             await AsyncStorage.clear()
-            await AsyncStorage.setItem('usertoken', `{"type": "${this.type}", "token" : "${r.token}"}`)
+            await AsyncStorage.setItem('usertoken', r.token)
         }
         return r
     }
+
 }

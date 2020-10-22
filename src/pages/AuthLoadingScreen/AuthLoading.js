@@ -26,7 +26,7 @@ class AuthLoading extends Component {
                     this.props.navigation.navigate('App')
                 break;
                 case true :
-                    this.props.OnUserSession({isonline : true, userdata : run.data})
+                    this.props.OnUserSession({isonline : true, tienda: run.negocio, userdata : run.data})
                     this.props.navigation.navigate('App')
                 break
                 case 'error':

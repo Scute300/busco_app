@@ -1,22 +1,23 @@
 import {AsyncStorage} from 'react-native'
 import axios from 'axios'
-const baseurl= 'https://buscoapp.herokuapp.com/api/v2/'
+import  baseurl from '../../globalfunctions/baseurl'
 
 const comprobation = async()=>{
-    let res = {response : false, }
-    const token = await AsyncStorage.getItem('user-token')
+    
+    const token = await AsyncStorage.getItem('usertoken')
+    console.log(token)
     if(token == null){
-        return res
+        return {response : false}
     } else {
-        await axios.get(baseurl+'me',
-        {headers: {Authorization: `Bearer ${token}`}, timeout:60000})
+       const r = await axios.get(baseurl+'v2/me',
+        {headers: {Authorization: token}, timeout:60000})
         .then(response => {
-            res = {response: true,
-            data: response.data.data}
+            return {response: true,
+            data: response.data.data, negocio: response.data.negocio}
         }).catch(error =>{
-            res = {response: 'error'}
+            return {response: 'error'}
         })
-        return res
+        return r
     }
 }
 

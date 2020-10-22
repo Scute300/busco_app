@@ -16,6 +16,10 @@ import Aoptions from './pages/updateprofile/advanceoptions'
 import Report from './pages/Report/Report'
 import Termns from './pages/Auth/termandconditions'
 import Drivermap from './pages/Map/Map'
+import Newmarket from './pages/newmarketprofile/newmarketprofile'
+import Newmarketcreate from './pages/newmarketprofile/Newmarketcreate'
+
+
 const LoginStack = createStackNavigator({
     Login : {
         screen : Login
@@ -27,17 +31,18 @@ const LoginStack = createStackNavigator({
 
 
 const DrawerStack = createDrawerNavigator({
-    Home :{
-        screen : HomeScreen,
-        navigationOptions :{
-            drawerLockMode : 'locked-closed',
-            drawerIcon: ({ tintColor, focused }) => (
-              <Icon
-              type='FontAwesome5'
-              name='home'
-              style={{fontSize:20, color : tintColor}}
-              />),
-        }
+    Home : {
+      screen : Drivermap,
+      navigationOptions: {
+          drawerLockMode : 'locked-closed',
+          unmountInactiveRoutes: true,
+          drawerIcon: ({ tintColor, focused }) => (
+            <Icon
+            type='Entypo'
+            name='home'
+            style={{fontSize:20, color : tintColor}}
+            />),
+      }
     },
     Modificar:{
       screen : Update,
@@ -66,8 +71,15 @@ const DrawerStack = createDrawerNavigator({
           drawerLabel : () =>  null
       }
     },
-      Drivermap : {
-      screen : Drivermap,
+    Newmarket : {
+      screen : Newmarket,
+      navigationOptions: {
+          drawerLockMode : 'locked-closed',
+          drawerLabel : () =>  null
+      }
+    },
+    Newmarketcreate : {
+      screen : Newmarketcreate,
       navigationOptions: {
           drawerLockMode : 'locked-closed',
           drawerLabel : () =>  null
@@ -107,7 +119,6 @@ export default class Myapp extends Component {
         super(props);
     }
     render(){
-        console.log('hola mundo')
         return(
             <Provider store={createStore(reducers)}>
             <Aplicacion/>

@@ -1,3 +1,3 @@
-const baseurl = 'https://buscoapp.herokuapp.com/api'
+const baseurl = 'https://buscoapi.herokuapp.com/api/'
 
 export default baseurl

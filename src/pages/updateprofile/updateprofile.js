@@ -65,46 +65,6 @@ class Update extends Component{
         return true;
     }
 
-    preview = async(quitar)=>{
-        if(quitar == false){
-            const image = await functions.getprofilepicturepreview()
-            switch(image.response){
-                case true : 
-                    this.setState({imagepreview : image.imageuri, base64 : image.base64})
-                    break;
-                case false :
-                    break
-            }
-        } else{
-            this.setState({imagepreview : null, base64 : null})
-        }
-    }
-    changeavatar = async()=>{
-        if(this.state.sendform == false){
-            if(Platform.OS == "android"){
-                BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-            }
-            this.setState({sendform : true})
-            const change = await functions.changeavatar(this.state.base64)
-            switch(change.response){
-                case true :
-                    this.props.OnUserSession({isonline : true, userdata : change.data})
-                    this.setState({imagepreview : null,base64 : null,sendform: false})
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    break;
-                case false :
-                    this.setState({sendform: false})
-                    if(Platform.OS == "android"){
-                        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                    }
-                    break;
-            }
-
-        }
-    }
-
     onchange(value, type, dflt){
         if(value !== ''){
             switch(type){
@@ -266,14 +226,7 @@ class Update extends Component{
                 />
                 <Content>
                     <Animated.View style={{marginTop : this.state.animatedXY.y, opacity: this.animateInterpolate}}>
-                        <View style={styles.cont}>
-                            <Thumbnail
-                            large
-                            source={{uri : (this.state.imagepreview == null)? this.props.userdata.userdata.avatar
-                            :this.state.imagepreview}}
-                            />
-                            {this.ipreview(this.state.imagepreview)}
-                        </View>
+                        
                         <Form>
                             <Text style={styles.icon}>Nombre</Text>
                             <Item>
@@ -343,50 +296,6 @@ class Update extends Component{
                  <Toast ref="toast"/>
             </Container>
         )
-    }
-    ipreview (status){
-        if(status == null){
-            return (
-                <TouchableOpacity
-                onPress={()=>{
-                    if(this.state.sendform == false){
-                        this.preview(false)
-                    }
-                    }}>
-                    <Icon
-                    type="FontAwesome"
-                    name="edit"
-                    style={styles.icon}
-                    />
-                </TouchableOpacity>
-            )
-        } else {
-            return(
-                <View style={styles.buttons}>
-                <TouchableOpacity 
-                onPress={this.changeavatar}>
-                    <Icon
-                    type="FontAwesome"
-                    name="check"
-                    style={styles.icon}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={()=>{
-                    if(this.state.sendform == false){
-                        this.preview(true)
-                    }
-                    }}>
-                    <Icon
-                    type="FontAwesome"
-                    name="close"
-                    style={styles.icon}
-                    />
-                </TouchableOpacity>
-
-                </View>
-            )
-        }
     }
 
     advanced(view){

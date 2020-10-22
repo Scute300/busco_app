@@ -50,6 +50,7 @@ class HomeScreen extends Component {
                 <Grid>
                     <Col style={{ height: this.state.height, backgroundColor : '#c8001d', alignItems:'center',justifyContent:'center', width: '50%'}}>
                         <TouchableOpacity
+                        onPress={()=>{this.props.navigation.navigate('Newmarket')}}
                         style={{width : '100%'}}>
                             <Icon
                             type='AntDesign'
